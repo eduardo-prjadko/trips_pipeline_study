@@ -1,0 +1,6 @@
+name: trips_project
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: code challange trips project
