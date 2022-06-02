@@ -1,5 +1,3 @@
-"""An Azure RM Python Pulumi program"""
-
 import pulumi
 from pulumi_azure_native import storage
 from pulumi_azure_native import resources
@@ -9,12 +7,27 @@ from pulumi_azure_native import web
 resource_group = resources.ResourceGroup('trips_project')
 
 # Create an Azure resource (Storage Account)
-trips_storage = storage.StorageAccount('satrips',
+trips_storage = storage.StorageAccount(
+    'satrips',
     resource_group_name=resource_group.name,
     sku=storage.SkuArgs(
         name=storage.SkuName.STANDARD_LRS,
     ),
     kind=storage.Kind.STORAGE_V2)
+
+# create a storage account queue
+trips_queue = storage.Queue(
+    resource_name='trips-entry',
+    account_name=trips_storage.name,
+    resource_group_name=resource_group.name
+)
+
+# create a storage account blob storage
+trips_blob_container = storage.BlobContainer(
+    resource_name='01-bronze',
+    account_name=trips_storage.name,
+    resource_group_name=resource_group.name
+)
 
 # Create storage account for azure functions
 af_storage = storage.StorageAccount('aftrips',
