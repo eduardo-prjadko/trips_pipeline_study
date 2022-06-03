@@ -15,18 +15,18 @@ from helper import (
 resource_group = resources.ResourceGroup('trips_project')
 
 # create storages
-apps_container = ContainerDef('00-apps', None)
-bronze_container = ContainerDef('01-bronze', None)
-silver_container = ContainerDef('02-silver', None)
-gold_container = ContainerDef('03-gold', None)
-trips_queue = QueueDef('trips-entry', None)
+apps_container = ContainerDef('00-apps')
+bronze_container = ContainerDef('01-bronze')
+silver_container = ContainerDef('02-silver')
+gold_container = ContainerDef('03-gold')
+trips_queue = QueueDef('trips-entry')
 storage_trips = StorageDef(
-    'satrips',
-    None, 
-    [apps_container, bronze_container, silver_container, gold_container],
-    [trips_queue]
+    'satrips', 
+    containers=[apps_container, bronze_container, 
+        silver_container, gold_container],
+    queues=[trips_queue]
 )
-storage_af = StorageDef('aftrips', None, [], [])
+storage_af = StorageDef('aftrips')
 
 for stg in [storage_trips, storage_af]:
     stg.obj = storage.StorageAccount(stg.name,
