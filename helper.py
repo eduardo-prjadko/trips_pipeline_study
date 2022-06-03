@@ -21,6 +21,7 @@ class QueueDef:
 class StorageDef:
 
     name: str
+    connection_string: str = None
     obj: storage.StorageAccount = None
     containers: List[ContainerDef] = field(default_factory=list)
     queues: List[QueueDef] = field(default_factory=list)
